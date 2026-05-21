@@ -32,6 +32,21 @@ const upcomingClients = [
   { name: 'Rafael Costa', service: 'Corte social', time: '17:10' },
 ];
 
+const journeySteps = [
+  {
+    title: 'Triagem cadastral',
+    description: 'Identifique habitos de lavagem e uso de ativos diarios do cliente.',
+  },
+  {
+    title: 'Modo rapido ou completo',
+    description: 'Adapte o fluxo de atendimento a agenda do barbeiro.',
+  },
+  {
+    title: 'Relatorio estetico',
+    description: 'Receba protocolos de barbearia prontos e cronograma home-care.',
+  },
+];
+
 function toneClasses(tone: DiagnosticMetric['tone']) {
   if (tone === 'emerald') {
     return 'bg-emerald-400/10 text-emerald-200 border-emerald-400/20';
@@ -49,6 +64,7 @@ export default function App() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisReady, setAnalysisReady] = useState(false);
+  const [workspaceVisible, setWorkspaceVisible] = useState(false);
 
   useEffect(() => {
     if (!selectedFile) {
@@ -86,57 +102,82 @@ export default function App() {
   const metrics = analysisReady ? analyzedMetrics : defaultMetrics;
 
   return (
-    <main className="min-h-screen overflow-hidden bg-slate-950 text-white">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(34,211,238,0.18),_transparent_22%),radial-gradient(circle_at_bottom_right,_rgba(249,115,22,0.12),_transparent_20%)]" />
-      <div className="relative mx-auto flex min-h-screen max-w-[1440px] flex-col gap-8 px-4 py-6 sm:px-6 lg:px-10 lg:py-10">
-        <header className="grid gap-5 rounded-[30px] border border-white/10 bg-slate-950/70 p-6 shadow-2xl shadow-slate-950/40 backdrop-blur-xl lg:grid-cols-[1.3fr_0.8fr] lg:items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs uppercase tracking-[0.28em] text-cyan-200">
-              <Sparkles className="h-3.5 w-3.5" />
-              Barber Scan IA
+    <main className="min-h-screen overflow-hidden bg-[#080503] text-[#f6ead5]">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(210,168,86,0.12),_transparent_30%),linear-gradient(180deg,_rgba(8,5,3,0.92),_rgba(8,5,3,1))]" />
+      <div className="relative mx-auto flex min-h-screen max-w-[1440px] flex-col px-4 py-4 sm:px-6 lg:px-8">
+        <header className="flex items-center justify-between border border-[#7d6231]/50 bg-black/35 px-4 py-3 sm:px-6">
+          <div className="flex items-center gap-3">
+            <div className="flex h-7 w-7 items-center justify-center rounded-sm border border-[#b08a49] text-sm font-semibold text-[#d7b26c]">
+              B
             </div>
-            <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Painel real de atendimento com scan capilar, foto do cliente e recomendacao imediata.
-            </h1>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
-              Estruture o atendimento da barbearia em uma unica tela: captura, leitura visual, orientacao tecnica e proximo passo comercial.
-            </p>
+            <div>
+              <p className="font-serif text-lg tracking-[0.16em] text-[#e0bb74] sm:text-xl">BARBER SCAN IA</p>
+              <p className="text-[9px] uppercase tracking-[0.24em] text-[#8f6e38] sm:text-[10px]">Cosmetic analysis & aesthetics</p>
+            </div>
           </div>
-
-          <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-            <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-4">
-              <div className="flex items-center gap-3 text-cyan-200">
-                <Clock3 className="h-5 w-5" />
-                <span className="text-sm text-slate-300">Tempo medio</span>
-              </div>
-              <p className="mt-4 text-3xl font-semibold text-white">2 min</p>
-            </div>
-            <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-4">
-              <div className="flex items-center gap-3 text-emerald-200">
-                <CheckCircle2 className="h-5 w-5" />
-                <span className="text-sm text-slate-300">Retencao</span>
-              </div>
-              <p className="mt-4 text-3xl font-semibold text-white">+28%</p>
-            </div>
-            <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-4">
-              <div className="flex items-center gap-3 text-amber-200">
-                <Scissors className="h-5 w-5" />
-                <span className="text-sm text-slate-300">Servicos guiados</span>
-              </div>
-              <p className="mt-4 text-3xl font-semibold text-white">12</p>
-            </div>
+          <div className="rounded-full border border-[#7d6231] px-4 py-1.5 text-[10px] uppercase tracking-[0.18em] text-[#d6ae62]">
+            Sistema credenciado
           </div>
         </header>
 
-        <section className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+        <section className="mx-auto flex w-full max-w-4xl flex-1 flex-col items-center justify-center py-16 text-center sm:py-24 lg:py-28">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full border border-[#b58d46] text-[#d8b166] shadow-[0_0_0_1px_rgba(181,141,70,0.12)]">
+            <Scissors className="h-7 w-7" />
+          </div>
+
+          <h1 className="mt-8 font-serif text-5xl leading-none tracking-tight sm:text-6xl lg:text-7xl">
+            <span className="text-white">BARBER </span>
+            <span className="text-[#c89a45]">SCAN IA</span>
+          </h1>
+
+          <div className="mt-5 flex items-center gap-3 text-[#c89a45]">
+            <div className="h-px w-12 bg-[#8f6d35]" />
+            <div className="h-2.5 w-2.5 rotate-45 border border-[#b78d45] bg-[#c89a45]/20" />
+            <div className="h-px w-12 bg-[#8f6d35]" />
+          </div>
+
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#eddaba] sm:text-xl">
+            Analise cosmetica capilar masculina para barbearias premium. Tecnologia estetica focada em protocolos personalizados de higienizacao cosmetica, barba e cronograma home care.
+          </p>
+
+          <a
+            href="#workspace"
+            onClick={() => setWorkspaceVisible(true)}
+            className="mt-10 inline-flex items-center justify-center rounded-md border border-[#f0dcc0] bg-[#e8d0ab] px-8 py-4 text-xs font-semibold uppercase tracking-[0.28em] text-[#17110a] transition hover:bg-[#f0dcc0]"
+          >
+            Iniciar analise cosmetica profissional
+          </a>
+
+          <div className="mt-12 w-full border-t border-[#4f3a1b] pt-8">
+            <div className="grid gap-6 text-left sm:grid-cols-3">
+              {journeySteps.map((step, index) => (
+                <article key={step.title} className="space-y-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f6ead5]">
+                    {index + 1}. {step.title}
+                  </p>
+                  <p className="text-sm leading-relaxed text-[#b89d71]">{step.description}</p>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-8 rounded-lg border border-[#3d2d14] bg-[#120c07] px-5 py-4 text-left text-xs leading-relaxed text-[#9f7f4b]">
+              Nota importante: Esta plataforma executa analises com propositos meramente cosmeticos, de embelezamento e estilizaçao capilar masculina. Nao possui natureza clinica, nao emitindo qualquer parecer sobre patologias ou prescriçoes medicas.
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="workspace"
+          className={`grid gap-6 pb-10 transition-all duration-500 xl:grid-cols-[1.1fr_0.9fr] ${workspaceVisible ? 'opacity-100' : 'opacity-100'}`}
+        >
           <div className="grid gap-6">
-            <div className="rounded-[30px] border border-white/10 bg-slate-900/80 p-5 shadow-2xl shadow-slate-950/30 backdrop-blur-xl sm:p-6">
+            <div className="rounded-[28px] border border-[#4c3617] bg-[#120b07]/95 p-5 shadow-[0_18px_80px_rgba(0,0,0,0.35)] sm:p-6">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <p className="text-sm uppercase tracking-[0.24em] text-cyan-300/80">Captura do cliente</p>
-                  <h2 className="mt-2 text-2xl font-semibold text-white">Upload ou foto para iniciar o diagnostico</h2>
+                  <p className="text-xs uppercase tracking-[0.24em] text-[#b68b42]">Captura cosmetica</p>
+                  <h2 className="mt-2 font-serif text-3xl text-[#f7ecdc]">Foto do cliente e triagem visual</h2>
                 </div>
-                <label className="inline-flex cursor-pointer items-center gap-3 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-100 transition hover:bg-cyan-400/20">
+                <label className="inline-flex cursor-pointer items-center gap-3 rounded-full border border-[#7d6231] bg-[#1b130c] px-4 py-2 text-sm text-[#efd6a9] transition hover:bg-[#261a10]">
                   <Upload className="h-4 w-4" />
                   Selecionar imagem
                   <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
@@ -144,39 +185,39 @@ export default function App() {
               </div>
 
               <div className="mt-6 grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
-                <div className="rounded-[28px] border border-dashed border-slate-700 bg-slate-950/80 p-4">
+                <div className="rounded-[24px] border border-dashed border-[#5e4420] bg-[#0b0705] p-4">
                   {previewUrl ? (
-                    <div className="overflow-hidden rounded-[22px] border border-white/10 bg-slate-950">
+                    <div className="overflow-hidden rounded-[20px] border border-[#4a371d] bg-black">
                       <img src={previewUrl} alt="Preview do cliente" className="h-[360px] w-full object-cover" />
                     </div>
                   ) : (
-                    <div className="flex h-[360px] flex-col items-center justify-center rounded-[22px] bg-[linear-gradient(135deg,rgba(8,47,73,0.65),rgba(15,23,42,0.92))] px-6 text-center">
-                      <div className="rounded-full border border-white/10 bg-white/5 p-4 text-cyan-200">
+                    <div className="flex h-[360px] flex-col items-center justify-center rounded-[20px] bg-[radial-gradient(circle_at_top,_rgba(200,154,69,0.14),_transparent_35%),linear-gradient(180deg,_rgba(18,12,7,0.95),_rgba(10,7,5,1))] px-6 text-center">
+                      <div className="rounded-full border border-[#7d6231] bg-[#19110b] p-4 text-[#d3aa63]">
                         <Camera className="h-7 w-7" />
                       </div>
-                      <h3 className="mt-5 text-xl font-semibold text-white">Pronto para escanear</h3>
-                      <p className="mt-3 max-w-sm text-sm leading-relaxed text-slate-300">
-                        Envie uma foto frontal ou lateral do couro cabeludo para simular o fluxo real de atendimento da barbearia.
+                      <h3 className="mt-5 font-serif text-2xl text-[#f6ead5]">Pronto para escanear</h3>
+                      <p className="mt-3 max-w-sm text-sm leading-relaxed text-[#bea378]">
+                        Carregue uma imagem frontal ou lateral para iniciar a leitura estetica e montar o protocolo da sessao.
                       </p>
                     </div>
                   )}
                 </div>
 
-                <div className="rounded-[28px] border border-white/10 bg-slate-950/80 p-5">
-                  <div className="flex items-center gap-3 text-slate-200">
-                    <UserRound className="h-5 w-5 text-cyan-300" />
+                <div className="rounded-[24px] border border-[#4a371d] bg-[#0d0806] p-5">
+                  <div className="flex items-center gap-3 text-[#f3dec0]">
+                    <UserRound className="h-5 w-5 text-[#cf9e4d]" />
                     <div>
-                      <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Ficha do cliente</p>
-                      <p className="mt-1 text-lg font-semibold text-white">Mateus Silva</p>
+                      <p className="text-xs uppercase tracking-[0.2em] text-[#8f6e38]">Ficha do cliente</p>
+                      <p className="mt-1 text-lg font-semibold text-[#f8efdf]">Mateus Silva</p>
                     </div>
                   </div>
 
-                  <div className="mt-6 grid gap-3 text-sm text-slate-300">
-                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-4">
-                      Queixa principal: afinamento na regiao frontal e excesso de oleosidade.
+                  <div className="mt-6 grid gap-3 text-sm text-[#d4bf9b]">
+                    <div className="rounded-2xl border border-[#332515] bg-[#140e09] p-4">
+                      Queixa principal: afinamento frontal, brilho excessivo na raiz e busca por acabamento mais limpo.
                     </div>
-                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-4">
-                      Objetivo: corte curto, visual limpo e orientacao de manutencao em casa.
+                    <div className="rounded-2xl border border-[#332515] bg-[#140e09] p-4">
+                      Objetivo: corte premium com orientacao home care e recomendacao de finalizacao.
                     </div>
                   </div>
 
@@ -184,39 +225,39 @@ export default function App() {
                     type="button"
                     onClick={handleAnalysis}
                     disabled={!selectedFile || isAnalyzing}
-                    className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-cyan-400 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400"
+                    className="mt-6 inline-flex w-full items-center justify-center rounded-2xl border border-[#d7b56f] bg-[#d9b977] px-4 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-[#1a130c] transition hover:bg-[#e4c588] disabled:cursor-not-allowed disabled:border-[#4b3b25] disabled:bg-[#2c2216] disabled:text-[#857052]"
                   >
-                    {isAnalyzing ? 'Analisando imagem...' : 'Gerar diagnostico'}
+                    {isAnalyzing ? 'Analisando imagem...' : 'Gerar diagnostico estetico'}
                   </button>
 
-                  <div className="mt-4 rounded-2xl border border-slate-800 bg-slate-900/80 p-4 text-sm text-slate-300">
+                  <div className="mt-4 rounded-2xl border border-[#332515] bg-[#140e09] p-4 text-sm text-[#c9b08a]">
                     {selectedFile
                       ? `Arquivo selecionado: ${selectedFile.name}`
-                      : 'Nenhuma imagem selecionada. O diagnostico habilita quando uma foto for enviada.'}
+                      : 'Nenhuma imagem selecionada. O diagnostico sera habilitado quando a foto for enviada.'}
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-              <section className="rounded-[30px] border border-white/10 bg-slate-900/80 p-6 shadow-2xl shadow-slate-950/30 backdrop-blur-xl">
+              <section className="rounded-[28px] border border-[#4c3617] bg-[#120b07]/95 p-6 shadow-[0_18px_80px_rgba(0,0,0,0.28)]">
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-sm uppercase tracking-[0.24em] text-cyan-300/80">Leitura tecnica</p>
-                    <h2 className="mt-2 text-2xl font-semibold text-white">Resumo do scan</h2>
+                    <p className="text-xs uppercase tracking-[0.24em] text-[#b68b42]">Leitura tecnica</p>
+                    <h2 className="mt-2 font-serif text-3xl text-[#f7ecdc]">Resumo do scan</h2>
                   </div>
-                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">
+                  <span className="rounded-full border border-[#4c3617] bg-[#19110b] px-3 py-1 text-xs text-[#cdb07f]">
                     {analysisReady ? 'Atualizado agora' : 'Aguardando imagem'}
                   </span>
                 </div>
 
                 <div className="mt-6 grid gap-4">
                   {metrics.map((metric) => (
-                    <article key={metric.label} className="rounded-3xl border border-slate-800 bg-slate-950/85 p-4">
+                    <article key={metric.label} className="rounded-3xl border border-[#332515] bg-[#0d0806] p-4">
                       <div className="flex items-center justify-between gap-3">
                         <div>
-                          <p className="text-sm text-slate-400">{metric.label}</p>
-                          <p className="mt-2 text-lg font-semibold text-white">{metric.value}</p>
+                          <p className="text-sm text-[#9d8359]">{metric.label}</p>
+                          <p className="mt-2 text-lg font-semibold text-[#f8efdf]">{metric.value}</p>
                         </div>
                         <span className={`rounded-full border px-3 py-1 text-xs ${toneClasses(metric.tone)}`}>
                           {metric.score > 0 ? `${metric.score}%` : '--'}
@@ -227,21 +268,21 @@ export default function App() {
                 </div>
               </section>
 
-              <section className="rounded-[30px] border border-white/10 bg-slate-900/80 p-6 shadow-2xl shadow-slate-950/30 backdrop-blur-xl">
-                <p className="text-sm uppercase tracking-[0.24em] text-cyan-300/80">Orientacao do barbeiro</p>
-                <h2 className="mt-2 text-2xl font-semibold text-white">Plano de acao e venda assistida</h2>
+              <section className="rounded-[28px] border border-[#4c3617] bg-[#120b07]/95 p-6 shadow-[0_18px_80px_rgba(0,0,0,0.28)]">
+                <p className="text-xs uppercase tracking-[0.24em] text-[#b68b42]">Relatorio estetico</p>
+                <h2 className="mt-2 font-serif text-3xl text-[#f7ecdc]">Plano de acao profissional</h2>
 
-                <div className="mt-6 rounded-[26px] border border-cyan-400/15 bg-[linear-gradient(135deg,rgba(8,47,73,0.35),rgba(15,23,42,0.95))] p-5">
-                  <p className="text-sm text-slate-300">Corte recomendado</p>
-                  <p className="mt-2 text-2xl font-semibold text-white">Low fade com textura no topo</p>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                    Preserva volume na parte superior, reduz brilho excessivo nas laterais e reforca a sensacao de densidade no contorno frontal.
+                <div className="mt-6 rounded-[24px] border border-[#6e5124] bg-[radial-gradient(circle_at_top,_rgba(200,154,69,0.14),_transparent_40%),linear-gradient(180deg,_rgba(24,16,10,0.96),_rgba(12,8,6,1))] p-5">
+                  <p className="text-sm text-[#c8b089]">Corte recomendado</p>
+                  <p className="mt-2 font-serif text-2xl text-[#fff4e3]">Low fade com textura no topo</p>
+                  <p className="mt-3 text-sm leading-relaxed text-[#d2bb98]">
+                    Preserva volume superior, reduz o brilho lateral e valoriza uma leitura visual mais densa na linha frontal.
                   </p>
                 </div>
 
                 <div className="mt-5 space-y-3">
                   {carePlan.map((item) => (
-                    <div key={item} className="rounded-2xl border border-slate-800 bg-slate-950/85 p-4 text-sm leading-relaxed text-slate-300">
+                    <div key={item} className="rounded-2xl border border-[#332515] bg-[#0d0806] p-4 text-sm leading-relaxed text-[#d4bf9b]">
                       {item}
                     </div>
                   ))}
@@ -251,19 +292,22 @@ export default function App() {
           </div>
 
           <aside className="grid gap-6">
-            <section className="rounded-[30px] border border-white/10 bg-slate-900/80 p-6 shadow-2xl shadow-slate-950/30 backdrop-blur-xl">
-              <p className="text-sm uppercase tracking-[0.24em] text-cyan-300/80">Operacao</p>
-              <h2 className="mt-2 text-2xl font-semibold text-white">Fila de atendimento</h2>
+            <section className="rounded-[28px] border border-[#4c3617] bg-[#120b07]/95 p-6 shadow-[0_18px_80px_rgba(0,0,0,0.28)]">
+              <div className="flex items-center gap-3 text-[#ddb971]">
+                <Clock3 className="h-5 w-5" />
+                <p className="text-xs uppercase tracking-[0.24em] text-[#b68b42]">Agenda premium</p>
+              </div>
+              <h2 className="mt-3 font-serif text-3xl text-[#f7ecdc]">Fila de atendimento</h2>
 
               <div className="mt-6 space-y-4">
                 {upcomingClients.map((client) => (
-                  <article key={`${client.name}-${client.time}`} className="rounded-3xl border border-slate-800 bg-slate-950/85 p-4">
+                  <article key={`${client.name}-${client.time}`} className="rounded-3xl border border-[#332515] bg-[#0d0806] p-4">
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <p className="text-lg font-semibold text-white">{client.name}</p>
-                        <p className="mt-1 text-sm text-slate-400">{client.service}</p>
+                        <p className="text-lg font-semibold text-[#f8efdf]">{client.name}</p>
+                        <p className="mt-1 text-sm text-[#a98c5d]">{client.service}</p>
                       </div>
-                      <span className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs text-cyan-200">
+                      <span className="rounded-full border border-[#6b4f24] bg-[#1a120b] px-3 py-1 text-xs text-[#d7b56f]">
                         {client.time}
                       </span>
                     </div>
@@ -272,15 +316,26 @@ export default function App() {
               </div>
             </section>
 
-            <section className="rounded-[30px] border border-white/10 bg-slate-900/80 p-6 shadow-2xl shadow-slate-950/30 backdrop-blur-xl">
-              <p className="text-sm uppercase tracking-[0.24em] text-cyan-300/80">Fluxo do app</p>
-              <h2 className="mt-2 text-2xl font-semibold text-white">Como a tela opera</h2>
+            <section className="rounded-[28px] border border-[#4c3617] bg-[#120b07]/95 p-6 shadow-[0_18px_80px_rgba(0,0,0,0.28)]">
+              <div className="flex items-center gap-3 text-[#ddb971]">
+                <Sparkles className="h-5 w-5" />
+                <p className="text-xs uppercase tracking-[0.24em] text-[#b68b42]">Protocolo</p>
+              </div>
+              <h2 className="mt-3 font-serif text-3xl text-[#f7ecdc]">Como a tela opera</h2>
 
-              <ol className="mt-6 space-y-4 text-sm leading-relaxed text-slate-300">
-                <li className="rounded-2xl border border-slate-800 bg-slate-950/85 p-4">1. Recepcao registra a foto do cliente no inicio do atendimento.</li>
-                <li className="rounded-2xl border border-slate-800 bg-slate-950/85 p-4">2. O barbeiro dispara a leitura e apresenta o diagnostico na mesma tela.</li>
-                <li className="rounded-2xl border border-slate-800 bg-slate-950/85 p-4">3. O app organiza recomendacao tecnica, produtos e retorno sugerido.</li>
-              </ol>
+              <div className="mt-6 space-y-4">
+                {journeySteps.map((step, index) => (
+                  <div key={step.title} className="rounded-2xl border border-[#332515] bg-[#0d0806] p-4">
+                    <p className="text-xs uppercase tracking-[0.16em] text-[#cf9e4d]">Etapa {index + 1}</p>
+                    <p className="mt-2 text-base font-semibold text-[#f7ecdc]">{step.title}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-[#c6ae88]">{step.description}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-5 rounded-2xl border border-[#332515] bg-[#0d0806] p-4 text-sm leading-relaxed text-[#b79766]">
+                Ambiente pensado para recepcao, triagem e apresentacao visual do resultado sem sair do padrao premium do design original.
+              </div>
             </section>
           </aside>
         </section>
